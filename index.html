@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title> VUE 3º ENTREGA VERONICA LARA </title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div id="app" class="container">
+
+		<h1> People of Vue </h1>
+		<input v-model="newperson" @keyup.enter="add" class="form-control" placeholder="Write your name, please">
+
+		
+		<ul class="list-group">
+			<li v-for="person in people" class="list-group-item">
+				{{person.name}},{{person.votes}} 	
+
+				<button @click="vote($index)" class="btn"> Vote </button>
+			</li>	
+		</ul>
+
+		<h1> Our mayor is {{person.name}} </h1>
+		
+	</div>
+	
+</body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.js"></script>
+
+<script>
+	
+let info = new Vue({
+		el: '#app',
+		data:{
+			people:[],
+			newperson: "",
+		},
+
+		methods:{
+			add: function(){
+				this.people.push({name: this.newperson, votes:0})
+			},
+
+			vote: function(index){
+				this.people[index].votes++;
+
+			},
+			
+		},
+		info: function(){
+
+			let maxVotes = 0;
+			let indexMayor = -1;
+
+			this.people.forEach(function(element, index){
+
+				if (element.votes > maxVotes){
+					indexMayor = index;
+					maxVotes = element.votes;
+				}
+			});
+
+			if (indexMayor != -1){
+				return this.people[indexMayor].name;
+			}else{
+				return;
+			}
+
+
+
+		}
+
+	});
+
+	
+</script>
+
+
+
+</html>
